@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <title>Real-time production floor dashboard | Manuel Powers</title>
+  <meta name="description" content="Case study: a FastAPI and PostgreSQL dashboard, deployed to a self-hosted k3s cluster and shown on digital signage, replacing manually maintained Excel reporting.">
+  <link rel="canonical" href="https://powers-technology.systems/work/production-dashboard.html">
+  <meta name="theme-color" content="#0b0e11">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Manuel Powers">
+  <meta property="og:title" content="Real-time production floor dashboard">
+  <meta property="og:description" content="Live production reporting on digital signage, replacing Excel reports that were maintained by hand.">
+  <meta property="og:url" content="https://powers-technology.systems/work/production-dashboard.html">
+  <meta property="og:image" content="https://powers-technology.systems/assets/img/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Manuel Powers: Systems Administrator, Infrastructure, Security, Automation">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/jetbrains-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">MP<span class="visually-hidden">, Manuel Powers, home</span></a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="../#about">about</a></li>
+          <li><a href="../#work">work</a></li>
+          <li><a href="../#stack">stack</a></li>
+          <li><a href="../#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="wrap case">
+      <p class="prompt" aria-hidden="true"><span class="prompt-path">~/projects/production-dashboard</span> <span class="prompt-sym">$</span> cat README.md</p>
+      <h1>Real-time production floor dashboard</h1>
+      <p class="lede">Live production reporting on digital signage, replacing Excel reports that were maintained by hand.</p>
+      <ul class="tags" aria-label="Stack">
+        <li>FastAPI</li><li>PostgreSQL</li><li>Docker Compose</li><li>k3s</li>
+      </ul>
+
+      <figure class="figure">
+        <svg class="dg" viewBox="0 0 360 270" role="img" aria-labelledby="dg-title dg-desc">
+          <title id="dg-title">Production dashboard architecture</title>
+          <desc id="dg-desc">Production data flows into the k3s cluster, where a FastAPI service and a PostgreSQL database run side by side. The FastAPI service feeds the displays on the production floor.</desc>
+          <defs>
+            <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path class="dg-arrowhead-accent" d="M0 1 L9 5 L0 9 z"/>
+            </marker>
+          </defs>
+
+          <rect class="dg-node" x="105" y="6" width="150" height="40" rx="6"/>
+          <text class="dg-label" x="180" y="31" text-anchor="middle">Production data</text>
+          <line class="dg-line dg-line-accent" x1="180" y1="46" x2="180" y2="68" marker-end="url(#arrow-accent)"/>
+
+          <!-- Cluster -->
+          <rect class="dg-group" x="6" y="70" width="348" height="100" rx="10"/>
+          <text class="dg-group-label" x="16" y="88">k3s cluster</text>
+
+          <rect class="dg-node-accent" x="20" y="98" width="140" height="52" rx="6"/>
+          <text class="dg-label" x="90" y="120" text-anchor="middle">FastAPI</text>
+          <text class="dg-sub" x="90" y="138" text-anchor="middle">API service</text>
+
+          <line class="dg-line dg-line-accent" x1="180" y1="124" x2="162" y2="124" marker-end="url(#arrow-accent)"/>
+          <line class="dg-line dg-line-accent" x1="180" y1="124" x2="198" y2="124" marker-end="url(#arrow-accent)"/>
+
+          <rect class="dg-node" x="200" y="98" width="140" height="52" rx="6"/>
+          <text class="dg-label" x="270" y="120" text-anchor="middle">PostgreSQL</text>
+          <text class="dg-sub" x="270" y="138" text-anchor="middle">database</text>
+
+          <!-- Out to the floor -->
+          <line class="dg-line dg-line-accent" x1="90" y1="150" x2="90" y2="208" marker-end="url(#arrow-accent)"/>
+
+          <rect class="dg-node" x="20" y="210" width="320" height="52" rx="6"/>
+          <text class="dg-label" x="180" y="232" text-anchor="middle">Floor displays</text>
+          <text class="dg-sub" x="180" y="250" text-anchor="middle">digital signage, live view</text>
+        </svg>
+        <figcaption>The application and its database run on the self-hosted cluster. Signage on the production floor shows the live view.</figcaption>
+      </figure>
+
+      <section class="case-section" aria-labelledby="problem">
+        <h2 id="problem"><span class="num" aria-hidden="true">01</span>Problem</h2>
+        <div class="flow">
+          <p>Production reporting lived in Excel workbooks that had to be maintained by hand. The numbers were only as current as the last manual update.</p>
+        </div>
+      </section>
+
+      <section class="case-section" aria-labelledby="approach">
+        <h2 id="approach"><span class="num" aria-hidden="true">02</span>Approach</h2>
+        <ul class="points">
+          <li><strong>A real backend.</strong> A FastAPI service backed by PostgreSQL stores and serves the production data, replacing the spreadsheet as the source of truth.</li>
+          <li><strong>Containerized.</strong> The application and database are packaged with Docker Compose.</li>
+          <li><strong>Deployed to the platform.</strong> It runs on the <a href="k3s-platform.html">self-hosted Kubernetes cluster</a>.</li>
+          <li><strong>Where the work happens.</strong> The dashboard runs on digital signage on the production floor, so current numbers are visible without anyone opening a file.</li>
+        </ul>
+      </section>
+
+      <section class="case-section" aria-labelledby="stack">
+        <h2 id="stack"><span class="num" aria-hidden="true">03</span>Stack</h2>
+        <ul class="tags">
+          <li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>Docker Compose</li><li>k3s (Kubernetes)</li><li>Digital signage</li>
+        </ul>
+      </section>
+
+      <section class="case-section" aria-labelledby="outcome">
+        <h2 id="outcome"><span class="num" aria-hidden="true">04</span>Outcome</h2>
+        <div class="flow">
+          <p>Production numbers update in real time on the floor's screens, and nobody maintains the Excel report by hand anymore. The data lives in a database instead of a workbook.</p>
+        </div>
+      </section>
+
+      <nav class="case-nav" aria-label="Case studies">
+        <a href="../#work">&larr; All work</a>
+        <a href="certificate-wifi.html">Next: Certificate-based Wi-Fi &rarr;</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Powers Technology Group</p>
+      <ul class="footer-links">
+        <li><a href="mailto:manuel@powers-technology.systems">email</a></li>
+        <li><a href="https://github.com/a-ghost-named-x">github</a></li>
+        <li><a href="https://www.linkedin.com/in/manuelp-itconsulting/">linkedin</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

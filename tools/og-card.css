@@ -1,0 +1,111 @@
+/* Styles for tools/og-card.html, the source of the 1200x630 social card. */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../assets/fonts/jetbrains-mono-latin-var.woff2") format("woff2");
+  font-weight: 100 800;
+}
+
+html,
+body {
+  margin: 0;
+  width: 1200px;
+  height: 630px;
+  overflow: hidden;
+  background: #0b0e11;
+}
+
+.card {
+  position: relative;
+  box-sizing: border-box;
+  width: 1200px;
+  height: 630px;
+  padding: 112px 96px 0;
+  color: #e6edf3;
+  font-family: "JetBrains Mono", monospace;
+  border-bottom: 10px solid #38d5e8;
+}
+
+/* Same faint grid as the site's hero */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(#232b34 1px, transparent 1px),
+    linear-gradient(90deg, #232b34 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.55;
+  mask-image: radial-gradient(ellipse 60% 80% at 85% 30%, #000 10%, transparent 70%);
+}
+
+.card > * {
+  position: relative;
+  margin: 0;
+}
+
+.prompt {
+  font-size: 30px;
+  color: #c3ccd6;
+}
+
+.path {
+  color: #38d5e8;
+}
+
+.sym {
+  color: #8b96a3;
+}
+
+.cursor {
+  display: inline-block;
+  width: 18px;
+  height: 34px;
+  margin-left: 6px;
+  vertical-align: -6px;
+  background: #38d5e8;
+}
+
+h1 {
+  margin-top: 28px;
+  font-size: 104px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.tagline {
+  margin-top: 36px;
+  font-size: 25px;
+  white-space: nowrap;
+  color: #c3ccd6;
+}
+
+.tagline span:not(:last-child)::after {
+  content: "|";
+  margin-left: 0.6em;
+  color: #38d5e8;
+}
+
+.domain {
+  position: absolute;
+  left: 96px;
+  bottom: 72px;
+  font-size: 28px;
+  color: #8b96a3;
+}
+
+.mark {
+  position: absolute;
+  right: 96px;
+  bottom: 60px;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border: 2px solid #34414e;
+  border-radius: 14px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #38d5e8;
+}

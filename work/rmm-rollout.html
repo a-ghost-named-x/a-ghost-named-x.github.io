@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <title>Company-wide RMM rollout | Manuel Powers</title>
+  <meta name="description" content="Case study: pitching, deploying, and extending a remote monitoring and management platform with Active Directory discovery, Group Policy, EDR API integration, IT ticketing, and PowerShell patch automation.">
+  <link rel="canonical" href="https://powers-technology.systems/work/rmm-rollout.html">
+  <meta name="theme-color" content="#0b0e11">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Manuel Powers">
+  <meta property="og:title" content="Company-wide RMM rollout">
+  <meta property="og:description" content="Pitched to ownership, deployed across the organization, then extended with EDR integration, IT ticketing, and automated server patching.">
+  <meta property="og:url" content="https://powers-technology.systems/work/rmm-rollout.html">
+  <meta property="og:image" content="https://powers-technology.systems/assets/img/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Manuel Powers: Systems Administrator, Infrastructure, Security, Automation">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/jetbrains-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">MP<span class="visually-hidden">, Manuel Powers, home</span></a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="../#about">about</a></li>
+          <li><a href="../#work">work</a></li>
+          <li><a href="../#stack">stack</a></li>
+          <li><a href="../#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="wrap case">
+      <p class="prompt" aria-hidden="true"><span class="prompt-path">~/projects/rmm-rollout</span> <span class="prompt-sym">$</span> cat README.md</p>
+      <h1>Company-wide RMM rollout</h1>
+      <p class="lede">Pitched to ownership, deployed across the organization, then extended with EDR integration, IT ticketing, and automated server patching.</p>
+      <ul class="tags" aria-label="Stack">
+        <li>RMM</li><li>Active Directory</li><li>Group Policy</li><li>EDR API</li><li>PowerShell</li>
+      </ul>
+
+      <figure class="figure">
+        <ol class="pipeline" aria-label="Rollout sequence">
+          <li><span class="step"><span class="step-name">1. Pitch</span><span class="step-note">ownership buy-in</span></span></li>
+          <li><span class="step"><span class="step-name">2. Discover</span><span class="step-note">Active Directory</span></span></li>
+          <li><span class="step"><span class="step-name">3. Deploy</span><span class="step-note">Group Policy</span></span></li>
+          <li><span class="step"><span class="step-name">4. Integrate</span><span class="step-note">EDR via API</span></span></li>
+          <li><span class="step"><span class="step-name">5. Operate</span><span class="step-note">tickets, patching</span></span></li>
+        </ol>
+        <figcaption>The rollout, from proposal to day-to-day operations.</figcaption>
+      </figure>
+
+      <section class="case-section" aria-labelledby="problem">
+        <h2 id="problem"><span class="num" aria-hidden="true">01</span>Problem</h2>
+        <div class="flow">
+          <p>IT ran reactively. There was no central view of endpoint health, no ticket queue for requests, and server patching was manual work. Moving to proactive operations meant getting a management platform onto the organization's machines, and that started with getting ownership on board.</p>
+        </div>
+      </section>
+
+      <section class="case-section" aria-labelledby="approach">
+        <h2 id="approach"><span class="num" aria-hidden="true">02</span>Approach</h2>
+        <ul class="points">
+          <li><strong>Made the case.</strong> Pitched a remote monitoring and management (RMM) platform to ownership and got the go-ahead for a company-wide rollout.</li>
+          <li><strong>Discovery first.</strong> Used Active Directory discovery to identify the endpoints that needed an agent.</li>
+          <li><strong>Deployed without desk visits.</strong> Pushed the agent out through Group Policy instead of installing it machine by machine.</li>
+          <li><strong>Connected security.</strong> Integrated the EDR platform through its API, so security data sits alongside device management.</li>
+          <li><strong>Built operations on top.</strong> Launched IT ticketing so requests have a queue and a history, and automated server patching with PowerShell.</li>
+        </ul>
+      </section>
+
+      <section class="case-section" aria-labelledby="stack">
+        <h2 id="stack"><span class="num" aria-hidden="true">03</span>Stack</h2>
+        <ul class="tags">
+          <li>RMM platform</li><li>Active Directory</li><li>Group Policy</li><li>EDR (API integration)</li><li>IT ticketing</li><li>PowerShell</li>
+        </ul>
+      </section>
+
+      <section class="case-section" aria-labelledby="outcome">
+        <h2 id="outcome"><span class="num" aria-hidden="true">04</span>Outcome</h2>
+        <div class="flow">
+          <p>IT moved from reacting to running a documented, proactive operation. Endpoints report into one platform, requests land in a queue with a history, and server patching runs through PowerShell automation.</p>
+        </div>
+      </section>
+
+      <nav class="case-nav" aria-label="Case studies">
+        <a href="../#work">&larr; All work</a>
+        <a href="k3s-platform.html">Next: Self-hosted Kubernetes platform &rarr;</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Powers Technology Group</p>
+      <ul class="footer-links">
+        <li><a href="mailto:manuel@powers-technology.systems">email</a></li>
+        <li><a href="https://github.com/a-ghost-named-x">github</a></li>
+        <li><a href="https://www.linkedin.com/in/manuelp-itconsulting/">linkedin</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

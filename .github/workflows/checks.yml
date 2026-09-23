@@ -1,0 +1,87 @@
+# Quality checks for the site, on every push and pull request.
+#
+# This workflow never deploys anything. GitHub Pages publishes straight from
+# the main branch; CI only reports whether the commit is clean.
+#
+# Supply-chain notes:
+#   - Actions are pinned to full commit SHAs (tag in the trailing comment).
+#     Dependabot (.github/dependabot.yml) proposes updates.
+#   - The validator is pinned by version and verified by SHA-512 before use.
+#   - The token is read-only and never persisted to disk.
+
+name: checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  html:
+    name: HTML validation (W3C Nu)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      # The W3C Nu HTML Checker (vnu.jar). Fetched as a plain tarball from the
+      # npm registry, the one place versioned, checksummed builds are
+      # published. npm itself is never installed or run.
+      VNU_VERSION: "26.9.16"
+      VNU_SHA512: "843772e456ea003f9e3998d481837389d4b38b9e2ffd595e07f6ac3b2cd81823dc9ac03d2b86afebea0a4be64ff43235376b3fcfa6d7ee4f24739c16af796c62"
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Fetch and verify the validator
+        working-directory: ${{ runner.temp }}
+        run: |
+          curl -fsSL --retry 3 -o vnu.tgz "https://registry.npmjs.org/vnu-jar/-/vnu-jar-${VNU_VERSION}.tgz"
+          echo "${VNU_SHA512}  vnu.tgz" | sha512sum --check --strict
+          tar -xzf vnu.tgz package/build/dist/vnu.jar
+          java -version
+
+      - name: Validate every HTML file
+        # Errors fail the job; warnings are printed but don't.
+        run: java -jar "${{ runner.temp }}/package/build/dist/vnu.jar" --skip-non-html .
+
+  links:
+    name: Link check (lychee)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Checks internal links (including #fragments) and external links.
+      # Excluded on purpose:
+      #   - powers-technology.systems: the site's own absolute URLs (canonical,
+      #     sitemap). They point at what this commit will become, so internal
+      #     links are checked as local files instead.
+      #   - linkedin.com: blocks automated requests with HTTP 999.
+      # 429 is accepted so a rate limit on a busy runner doesn't fail the build.
+      - name: Check links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          fail: true
+          args: >-
+            --no-progress
+            --include-fragments
+            --root-dir "${{ github.workspace }}"
+            --index-files index.html
+            --exclude-loopback
+            --exclude "^https?://powers-technology\.systems"
+            --exclude "^https?://([a-z]+\.)?linkedin\.com"
+            --max-retries 3
+            --accept "200..=299,429"
+            "./**/*.html"
+            "README.md"

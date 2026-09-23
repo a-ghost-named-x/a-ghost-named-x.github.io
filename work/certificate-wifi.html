@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <title>Certificate-based enterprise Wi-Fi | Manuel Powers</title>
+  <meta name="description" content="Case study: wireless access tied to managed devices through an internal PKI, RADIUS, Group Policy certificate autoenrollment, and WPA2/WPA3-Enterprise.">
+  <link rel="canonical" href="https://powers-technology.systems/work/certificate-wifi.html">
+  <meta name="theme-color" content="#0b0e11">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Manuel Powers">
+  <meta property="og:title" content="Certificate-based enterprise Wi-Fi">
+  <meta property="og:description" content="Wireless access tied to managed devices through an internal PKI, RADIUS, and Group Policy. No shared password.">
+  <meta property="og:url" content="https://powers-technology.systems/work/certificate-wifi.html">
+  <meta property="og:image" content="https://powers-technology.systems/assets/img/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Manuel Powers: Systems Administrator, Infrastructure, Security, Automation">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/jetbrains-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">MP<span class="visually-hidden">, Manuel Powers, home</span></a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="../#about">about</a></li>
+          <li><a href="../#work">work</a></li>
+          <li><a href="../#stack">stack</a></li>
+          <li><a href="../#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="wrap case">
+      <p class="prompt" aria-hidden="true"><span class="prompt-path">~/projects/certificate-wifi</span> <span class="prompt-sym">$</span> cat README.md</p>
+      <h1>Certificate-based enterprise Wi-Fi</h1>
+      <p class="lede">Wireless access tied to managed devices through an internal PKI, RADIUS, and Group Policy. No shared password.</p>
+      <ul class="tags" aria-label="Stack">
+        <li>AD CS</li><li>NPS / RADIUS</li><li>Group Policy</li><li>802.1X</li><li>WPA2/WPA3-Enterprise</li>
+      </ul>
+
+      <figure class="figure">
+        <svg class="dg" viewBox="0 0 360 328" role="img" aria-labelledby="dg-title dg-desc">
+          <title id="dg-title">Certificate-based Wi-Fi authentication flow</title>
+          <desc id="dg-desc">The internal certificate authority issues certificates to managed, domain-joined devices through Group Policy autoenrollment. A device presents its certificate to the access point over 802.1X. The access point sends the request to the RADIUS server, which checks the certificate against the internal CA before access is granted.</desc>
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path class="dg-arrowhead" d="M0 1 L9 5 L0 9 z"/>
+            </marker>
+            <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path class="dg-arrowhead-accent" d="M0 1 L9 5 L0 9 z"/>
+            </marker>
+          </defs>
+
+          <!-- Certificate authority -->
+          <rect class="dg-node-accent" x="110" y="8" width="140" height="48" rx="6"/>
+          <text class="dg-label" x="180" y="28" text-anchor="middle">Internal CA</text>
+          <text class="dg-sub" x="180" y="46" text-anchor="middle">AD CS / PKI</text>
+
+          <!-- CA to device: autoenrollment -->
+          <line class="dg-line dg-line-accent" x1="130" y1="56" x2="88" y2="138" marker-end="url(#arrow-accent)"/>
+          <text class="dg-edge" x="96" y="90" text-anchor="end">Group Policy</text>
+          <text class="dg-edge" x="96" y="104" text-anchor="end">autoenrollment</text>
+
+          <!-- Managed device -->
+          <rect class="dg-node" x="6" y="140" width="130" height="48" rx="6"/>
+          <text class="dg-label" x="71" y="160" text-anchor="middle">Managed device</text>
+          <text class="dg-sub" x="71" y="178" text-anchor="middle">domain-joined</text>
+
+          <!-- RADIUS -->
+          <rect class="dg-node" x="224" y="140" width="130" height="48" rx="6"/>
+          <text class="dg-label" x="289" y="160" text-anchor="middle">RADIUS</text>
+          <text class="dg-sub" x="289" y="178" text-anchor="middle">NPS</text>
+
+          <!-- RADIUS trusts the CA -->
+          <line class="dg-line dg-dash" x1="272" y1="140" x2="230" y2="58" marker-end="url(#arrow)"/>
+          <text class="dg-edge" x="264" y="92">checks cert</text>
+          <text class="dg-edge" x="264" y="106">against CA</text>
+
+          <!-- Device to access point -->
+          <line class="dg-line dg-line-accent" x1="88" y1="188" x2="130" y2="270" marker-end="url(#arrow-accent)"/>
+          <text class="dg-edge" x="96" y="236" text-anchor="end">802.1X</text>
+
+          <!-- Access point to RADIUS -->
+          <line class="dg-line dg-line-accent" x1="230" y1="270" x2="272" y2="190" marker-end="url(#arrow-accent)"/>
+          <text class="dg-edge" x="264" y="236">authenticate</text>
+
+          <!-- Access point -->
+          <rect class="dg-node" x="110" y="272" width="140" height="48" rx="6"/>
+          <text class="dg-label" x="180" y="292" text-anchor="middle">Access point</text>
+          <text class="dg-sub" x="180" y="310" text-anchor="middle">WPA2/3-Enterprise</text>
+        </svg>
+        <figcaption>Devices receive certificates automatically, then present them over 802.1X. RADIUS checks each one against the internal CA before the device gets on the network.</figcaption>
+      </figure>
+
+      <section class="case-section" aria-labelledby="problem">
+        <h2 id="problem"><span class="num" aria-hidden="true">01</span>Problem</h2>
+        <div class="flow">
+          <p>A shared Wi-Fi password can't tell a managed device from anything else that knows it, and it can't be taken back from one device without changing it for everyone. The goal was wireless access tied to device identity, not to a secret that travels.</p>
+        </div>
+      </section>
+
+      <section class="case-section" aria-labelledby="approach">
+        <h2 id="approach"><span class="num" aria-hidden="true">02</span>Approach</h2>
+        <ul class="points">
+          <li><strong>Identity from PKI.</strong> An internal certificate authority issues the certificates that identify the organization's devices.</li>
+          <li><strong>Zero-touch enrollment.</strong> Group Policy autoenrollment has domain devices request and renew their own certificates, with nothing for the user to install or type.</li>
+          <li><strong>Verify every connection.</strong> RADIUS validates each device's certificate before the network lets it on.</li>
+          <li><strong>Enterprise mode.</strong> The wireless network runs WPA2/WPA3-Enterprise, with 802.1X handling authentication at the access point.</li>
+        </ul>
+      </section>
+
+      <section class="case-section" aria-labelledby="stack">
+        <h2 id="stack"><span class="num" aria-hidden="true">03</span>Stack</h2>
+        <ul class="tags">
+          <li>AD CS / internal PKI</li><li>Group Policy</li><li>NPS / RADIUS</li><li>802.1X</li><li>WPA2-Enterprise</li><li>WPA3-Enterprise</li>
+        </ul>
+      </section>
+
+      <section class="case-section" aria-labelledby="outcome">
+        <h2 id="outcome"><span class="num" aria-hidden="true">04</span>Outcome</h2>
+        <div class="flow">
+          <p>Managed devices connect automatically with a certificate the user never sees. There's no Wi-Fi password to hand out or leak, and access belongs to the device, so it can be pulled for one machine without touching anyone else.</p>
+        </div>
+      </section>
+
+      <nav class="case-nav" aria-label="Case studies">
+        <a href="../#work">&larr; All work</a>
+        <a href="rmm-rollout.html">Next: Company-wide RMM rollout &rarr;</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Powers Technology Group</p>
+      <ul class="footer-links">
+        <li><a href="mailto:manuel@powers-technology.systems">email</a></li>
+        <li><a href="https://github.com/a-ghost-named-x">github</a></li>
+        <li><a href="https://www.linkedin.com/in/manuelp-itconsulting/">linkedin</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

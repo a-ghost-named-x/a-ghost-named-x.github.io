@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex">
+
+  <title>404: command not found | Manuel Powers</title>
+  <meta name="description" content="This page doesn't exist.">
+  <meta name="theme-color" content="#0b0e11">
+  <meta name="color-scheme" content="dark">
+
+  <!-- GitHub Pages serves this file for any missing path, so every URL here is root-absolute. -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script src="/assets/js/notfound.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">MP<span class="visually-hidden">, Manuel Powers, home</span></a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#about">about</a></li>
+          <li><a href="/#work">work</a></li>
+          <li><a href="/#stack">stack</a></li>
+          <li><a href="/#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap notfound">
+    <p class="prompt" aria-hidden="true"><span class="prompt-path">~</span> <span class="prompt-sym">$</span> echo $?</p>
+    <h1>404: command not found</h1>
+    <p class="lede">That page doesn't exist, or it moved.</p>
+
+    <div class="term">
+      <div class="term-bar" aria-hidden="true">
+        <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+        <span class="term-title">guest@mp: ~</span>
+      </div>
+      <div class="term-log">
+        <p class="t-echo"><span class="t-ps1">guest@mp:~$</span> <span data-path>that-page</span></p>
+        <p class="t-err">bash: <span data-path>that-page</span>: command not found</p>
+        <p class="t-echo"><span class="t-ps1">guest@mp:~$</span> ls ~</p>
+        <p class="t-out ls-links">
+          <a href="/#about">about/</a>
+          <a href="/#work">projects/</a>
+          <a href="/#stack">stack/</a>
+          <a href="/#contact">contact/</a>
+        </p>
+        <p class="t-echo"><span class="t-ps1">guest@mp:~$</span> <span class="cursor" aria-hidden="true"></span></p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="/">cd ~</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Powers Technology Group</p>
+      <ul class="footer-links">
+        <li><a href="mailto:manuel@powers-technology.systems">email</a></li>
+        <li><a href="https://github.com/a-ghost-named-x">github</a></li>
+        <li><a href="https://www.linkedin.com/in/manuelp-itconsulting/">linkedin</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

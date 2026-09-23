@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <title>Self-hosted Kubernetes platform | Manuel Powers</title>
+  <meta name="description" content="Case study: a highly available k3s platform with Nginx and keepalived load balancers on a virtual IP, Traefik ingress, TLS, and GitHub Actions CI/CD through self-hosted runners.">
+  <link rel="canonical" href="https://powers-technology.systems/work/k3s-platform.html">
+  <meta name="theme-color" content="#0b0e11">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Manuel Powers">
+  <meta property="og:title" content="Self-hosted Kubernetes platform">
+  <meta property="og:description" content="A highly available k3s platform for internal applications, with load-balanced ingress, TLS, and push-to-deploy CI/CD.">
+  <meta property="og:url" content="https://powers-technology.systems/work/k3s-platform.html">
+  <meta property="og:image" content="https://powers-technology.systems/assets/img/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Manuel Powers: Systems Administrator, Infrastructure, Security, Automation">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/jetbrains-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">MP<span class="visually-hidden">, Manuel Powers, home</span></a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="../#about">about</a></li>
+          <li><a href="../#work">work</a></li>
+          <li><a href="../#stack">stack</a></li>
+          <li><a href="../#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="wrap case">
+      <p class="prompt" aria-hidden="true"><span class="prompt-path">~/projects/k3s-platform</span> <span class="prompt-sym">$</span> cat README.md</p>
+      <h1>Self-hosted Kubernetes platform</h1>
+      <p class="lede">A highly available k3s platform for internal applications, with load-balanced ingress, TLS, and push-to-deploy CI/CD.</p>
+      <ul class="tags" aria-label="Stack">
+        <li>k3s</li><li>Nginx</li><li>keepalived</li><li>Traefik</li><li>GitHub Actions</li><li>GHCR</li>
+      </ul>
+
+      <figure class="figure">
+        <svg class="dg" viewBox="0 0 360 466" role="img" aria-labelledby="dg-title dg-desc">
+          <title id="dg-title">Traffic path through the k3s platform</title>
+          <desc id="dg-desc">Clients connect over HTTPS to a virtual IP. Two Nginx load balancers share the virtual IP through keepalived, one active and one on standby. The active balancer forwards traffic to the Traefik ingress inside the k3s cluster, which routes it to application pods on the worker nodes. A dedicated control plane node manages the workers.</desc>
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path class="dg-arrowhead" d="M0 1 L9 5 L0 9 z"/>
+            </marker>
+            <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path class="dg-arrowhead-accent" d="M0 1 L9 5 L0 9 z"/>
+            </marker>
+          </defs>
+
+          <!-- Clients to VIP -->
+          <rect class="dg-node" x="125" y="6" width="110" height="34" rx="6"/>
+          <text class="dg-label" x="180" y="28" text-anchor="middle">Clients</text>
+          <line class="dg-line dg-line-accent" x1="180" y1="40" x2="180" y2="70" marker-end="url(#arrow-accent)"/>
+          <text class="dg-edge" x="188" y="59">HTTPS</text>
+
+          <rect class="dg-node-accent" x="140" y="72" width="80" height="28" rx="14"/>
+          <text class="dg-label" x="180" y="91" text-anchor="middle">VIP</text>
+
+          <!-- Load balancer pair -->
+          <line class="dg-line dg-line-accent" x1="160" y1="100" x2="97" y2="128" marker-end="url(#arrow-accent)"/>
+          <line class="dg-line dg-dash" x1="200" y1="100" x2="263" y2="128" marker-end="url(#arrow)"/>
+
+          <rect class="dg-node-accent" x="15" y="130" width="155" height="48" rx="6"/>
+          <text class="dg-label" x="92.5" y="150" text-anchor="middle">Load balancer 1</text>
+          <text class="dg-sub" x="92.5" y="168" text-anchor="middle">Nginx · active</text>
+
+          <rect class="dg-node" x="190" y="130" width="155" height="48" rx="6"/>
+          <text class="dg-label" x="267.5" y="150" text-anchor="middle">Load balancer 2</text>
+          <text class="dg-sub" x="267.5" y="168" text-anchor="middle">Nginx · standby</text>
+
+          <line class="dg-line dg-dash" x1="170" y1="154" x2="190" y2="154"/>
+          <text class="dg-edge" x="180" y="198" text-anchor="middle">keepalived · VRRP</text>
+
+          <line class="dg-line dg-line-accent" x1="92.5" y1="178" x2="92.5" y2="236" marker-end="url(#arrow-accent)"/>
+          <line class="dg-line dg-dash" x1="267.5" y1="178" x2="267.5" y2="236" marker-end="url(#arrow)"/>
+
+          <!-- Cluster -->
+          <rect class="dg-group" x="6" y="212" width="348" height="246" rx="10"/>
+          <text class="dg-group-label" x="344" y="446" text-anchor="end">k3s cluster</text>
+
+          <rect class="dg-node-accent" x="20" y="238" width="320" height="38" rx="6"/>
+          <text class="dg-label" x="180" y="262" text-anchor="middle">Ingress · Traefik</text>
+
+          <line class="dg-line dg-line-accent" x1="92.5" y1="276" x2="92.5" y2="300" marker-end="url(#arrow-accent)"/>
+          <line class="dg-line dg-line-accent" x1="267.5" y1="276" x2="267.5" y2="300" marker-end="url(#arrow-accent)"/>
+
+          <rect class="dg-node" x="20" y="302" width="145" height="48" rx="6"/>
+          <text class="dg-label" x="92.5" y="322" text-anchor="middle">Worker 1</text>
+          <text class="dg-sub" x="92.5" y="340" text-anchor="middle">app pods</text>
+
+          <rect class="dg-node" x="195" y="302" width="145" height="48" rx="6"/>
+          <text class="dg-label" x="267.5" y="322" text-anchor="middle">Worker 2</text>
+          <text class="dg-sub" x="267.5" y="340" text-anchor="middle">app pods</text>
+
+          <line class="dg-line" x1="92.5" y1="372" x2="92.5" y2="350"/>
+          <line class="dg-line" x1="267.5" y1="372" x2="267.5" y2="350"/>
+
+          <rect class="dg-node" x="20" y="372" width="320" height="48" rx="6"/>
+          <text class="dg-label" x="180" y="392" text-anchor="middle">Control plane</text>
+          <text class="dg-sub" x="180" y="410" text-anchor="middle">dedicated node</text>
+        </svg>
+        <figcaption>Solid lines carry live traffic. Dashed lines show the standby path that keepalived fails over to.</figcaption>
+      </figure>
+
+      <section class="case-section" aria-labelledby="problem">
+        <h2 id="problem"><span class="num" aria-hidden="true">01</span>Problem</h2>
+        <div class="flow">
+          <p>Internal applications, such as the production floor dashboard, needed a place to run. That platform had to keep serving if a load balancer went down, handle HTTPS cleanly, and ship new versions from a git push instead of by hand.</p>
+        </div>
+      </section>
+
+      <section class="case-section" aria-labelledby="approach">
+        <h2 id="approach"><span class="num" aria-hidden="true">02</span>Approach</h2>
+        <ul class="points">
+          <li><strong>Separate roles.</strong> A k3s cluster with a dedicated control plane and separate worker nodes, so cluster management and application workloads don't compete for the same machine.</li>
+          <li><strong>No single front door.</strong> Nginx load balancers sit in front of the cluster, with keepalived managing a shared virtual IP. Clients only ever see the VIP. If the active balancer fails, the standby takes the address over.</li>
+          <li><strong>One ingress.</strong> Traefik is the ingress controller, routing requests to the right service, with TLS termination for HTTPS.</li>
+          <li><strong>Push to deploy.</strong> GitHub Actions workflows run on self-hosted runners. A push builds the container image, publishes it to GitHub Container Registry, and rolls it out to the cluster.</li>
+        </ul>
+        <ol class="pipeline" aria-label="Delivery pipeline">
+          <li><span class="step"><span class="step-name">git push</span><span class="step-note">app repo</span></span></li>
+          <li><span class="step"><span class="step-name">GitHub Actions</span><span class="step-note">workflow triggers</span></span></li>
+          <li><span class="step"><span class="step-name">Self-hosted runner</span><span class="step-note">builds the image</span></span></li>
+          <li><span class="step"><span class="step-name">GHCR</span><span class="step-note">stores the image</span></span></li>
+          <li><span class="step"><span class="step-name">k3s</span><span class="step-note">rolls it out</span></span></li>
+        </ol>
+      </section>
+
+      <section class="case-section" aria-labelledby="stack">
+        <h2 id="stack"><span class="num" aria-hidden="true">03</span>Stack</h2>
+        <ul class="tags">
+          <li>k3s (Kubernetes)</li><li>Nginx</li><li>keepalived</li><li>Traefik</li><li>TLS</li><li>GitHub Actions</li><li>Self-hosted runners</li><li>GitHub Container Registry</li>
+        </ul>
+      </section>
+
+      <section class="case-section" aria-labelledby="outcome">
+        <h2 id="outcome"><span class="num" aria-hidden="true">04</span>Outcome</h2>
+        <div class="flow">
+          <p>Internal applications, including the <a href="production-dashboard.html">production floor dashboard</a>, run on a platform with no single load balancer as a point of failure. Shipping a change is a git push: the pipeline handles the build, the registry, and the rollout.</p>
+        </div>
+      </section>
+
+      <nav class="case-nav" aria-label="Case studies">
+        <a href="../#work">&larr; All work</a>
+        <a href="production-dashboard.html">Next: Production floor dashboard &rarr;</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Powers Technology Group</p>
+      <ul class="footer-links">
+        <li><a href="mailto:manuel@powers-technology.systems">email</a></li>
+        <li><a href="https://github.com/a-ghost-named-x">github</a></li>
+        <li><a href="https://www.linkedin.com/in/manuelp-itconsulting/">linkedin</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

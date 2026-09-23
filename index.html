@@ -1,1 +1,398 @@
-Hello World
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Same-origin only: no inline scripts or styles, no third-party requests. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <title>Manuel Powers | Systems Administrator: Infrastructure, Security, Automation</title>
+  <meta name="description" content="Manuel Powers, systems administrator. Case studies in self-hosted Kubernetes, certificate-based Wi-Fi, endpoint management, and automation for a multi-building manufacturing organization.">
+  <link rel="canonical" href="https://powers-technology.systems/">
+  <meta name="theme-color" content="#0b0e11">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Social previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Manuel Powers">
+  <meta property="og:title" content="Manuel Powers | Infrastructure, Security, Automation">
+  <meta property="og:description" content="Systems administrator. I design, secure, and automate the infrastructure a business runs on.">
+  <meta property="og:url" content="https://powers-technology.systems/">
+  <meta property="og:image" content="https://powers-technology.systems/assets/img/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Manuel Powers: Systems Administrator, Infrastructure, Security, Automation">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Manuel Powers | Infrastructure, Security, Automation">
+  <meta name="twitter:description" content="Systems administrator. I design, secure, and automate the infrastructure a business runs on.">
+  <meta name="twitter:image" content="https://powers-technology.systems/assets/img/og-card.png">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/terminal.js" defer></script>
+
+  <!-- Structured data. A data block, not a script, so the CSP doesn't apply. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Manuel Powers",
+    "jobTitle": "Systems Administrator",
+    "url": "https://powers-technology.systems/",
+    "email": "mailto:manuel@powers-technology.systems",
+    "sameAs": [
+      "https://github.com/a-ghost-named-x",
+      "https://www.linkedin.com/in/manuelp-itconsulting/"
+    ]
+  }
+  </script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#top">MP<span class="visually-hidden">, Manuel Powers, back to top</span></a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="#about">about</a></li>
+          <li><a href="#work">work</a></li>
+          <li><a href="#stack">stack</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- Hero ============================================================ -->
+    <section class="hero" aria-labelledby="hero-name">
+      <div class="wrap">
+        <p class="prompt" aria-hidden="true"><span class="prompt-path">~</span> <span class="prompt-sym">$</span> whoami<span class="cursor"></span></p>
+        <h1 id="hero-name">Manuel Powers</h1>
+        <p class="tagline"><span>Systems Administrator</span> <span>Infrastructure</span> <span>Security</span> <span>Automation</span></p>
+        <p class="hero-statement">I design, secure, and automate the infrastructure a business runs on.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/a-ghost-named-x">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/manuelp-itconsulting/">LinkedIn</a>
+          <a class="btn" href="mailto:manuel@powers-technology.systems">Email</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About =========================================================== -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="prompt" aria-hidden="true"><span class="prompt-path">~/about</span> <span class="prompt-sym">$</span> cat about.md</p>
+          <h2 id="about-title">About</h2>
+        </div>
+        <div class="about">
+          <!--
+            HEADSHOT SLOT
+            1. Save a square photo as assets/headshot.jpg (480x480 or larger, under 80 KB).
+            2. Uncomment the <img> below. The layout switches to two columns on its own.
+          -->
+          <!-- <img class="headshot" src="assets/headshot.jpg" width="480" height="480" alt="Manuel Powers" decoding="async"> -->
+          <div class="about-text flow">
+            <p>I run end-to-end infrastructure for a multi-building manufacturing organization: servers, identity, networking, endpoints, security, and the internal applications that sit on top.</p>
+            <p>I came into IT through cybersecurity, so security is a design input for me, not a cleanup task. When something breaks, I chase the root cause instead of the symptom, then automate the fix so it stays fixed.</p>
+            <p>The goal behind all of it: turn reactive IT into documented, proactive operations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Terminal ========================================================
+         Progressive enhancement: without JavaScript the frame still renders
+         (no layout shift) with a note, and every answer is on the page. -->
+    <section class="section" id="shell" aria-labelledby="shell-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="prompt" aria-hidden="true"><span class="prompt-path">~/shell</span> <span class="prompt-sym">$</span> ./terminal</p>
+          <h2 id="shell-title">Terminal</h2>
+          <p class="section-lede">Prefer a shell? Type <code>help</code>, or pick a command below. Everything it prints is also on this page.</p>
+        </div>
+
+        <div class="term">
+          <div class="term-bar" aria-hidden="true">
+            <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+            <span class="term-title">guest@mp: ~</span>
+          </div>
+          <div class="term-log" id="term-log" role="log" aria-label="Terminal output" tabindex="0">
+            <p class="t-muted">This terminal needs JavaScript. Everything it can tell you is on this page.</p>
+          </div>
+          <form class="term-form" id="term-form">
+            <span class="t-ps1" aria-hidden="true">guest@mp:~$</span>
+            <input class="term-input" id="term-input" type="text" aria-label="Terminal command" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="send" disabled>
+          </form>
+        </div>
+
+        <ul class="term-chips" aria-label="Quick commands">
+          <li><button class="chip" type="button" data-cmd="help" disabled>help</button></li>
+          <li><button class="chip" type="button" data-cmd="whoami" disabled>whoami</button></li>
+          <li><button class="chip" type="button" data-cmd="skills" disabled>skills</button></li>
+          <li><button class="chip" type="button" data-cmd="projects" disabled>projects</button></li>
+          <li><button class="chip" type="button" data-cmd="certs" disabled>certs</button></li>
+          <li><button class="chip" type="button" data-cmd="contact" disabled>contact</button></li>
+          <li><button class="chip" type="button" data-cmd="clear" disabled>clear</button></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Featured work =================================================== -->
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="prompt" aria-hidden="true"><span class="prompt-path">~/projects</span> <span class="prompt-sym">$</span> ls</p>
+          <h2 id="work-title">Featured work</h2>
+          <p class="section-lede">Four projects, each written up as problem, approach, stack, and outcome.</p>
+        </div>
+
+        <ul class="card-grid">
+          <li>
+            <article class="card">
+              <p class="card-kicker">01 / platform</p>
+              <h3><a href="work/k3s-platform.html">Self-hosted Kubernetes platform</a></h3>
+              <p class="card-summary">A highly available k3s platform for internal applications, with load-balanced ingress, TLS, and push-to-deploy CI/CD.</p>
+              <ul class="tags" aria-label="Stack">
+                <li>k3s</li><li>Nginx</li><li>keepalived</li><li>Traefik</li><li>GitHub Actions</li><li>GHCR</li>
+              </ul>
+              <p class="card-more" aria-hidden="true">Read case study &rarr;</p>
+            </article>
+          </li>
+          <li>
+            <article class="card">
+              <p class="card-kicker">02 / application</p>
+              <h3><a href="work/production-dashboard.html">Real-time production floor dashboard</a></h3>
+              <p class="card-summary">Live production reporting on digital signage, replacing Excel reports that were maintained by hand.</p>
+              <ul class="tags" aria-label="Stack">
+                <li>FastAPI</li><li>PostgreSQL</li><li>Docker Compose</li><li>k3s</li>
+              </ul>
+              <p class="card-more" aria-hidden="true">Read case study &rarr;</p>
+            </article>
+          </li>
+          <li>
+            <article class="card">
+              <p class="card-kicker">03 / identity</p>
+              <h3><a href="work/certificate-wifi.html">Certificate-based enterprise Wi-Fi</a></h3>
+              <p class="card-summary">Wireless access tied to managed devices through an internal PKI, RADIUS, and Group Policy. No shared password.</p>
+              <ul class="tags" aria-label="Stack">
+                <li>AD CS</li><li>NPS / RADIUS</li><li>Group Policy</li><li>802.1X</li><li>WPA2/WPA3-Enterprise</li>
+              </ul>
+              <p class="card-more" aria-hidden="true">Read case study &rarr;</p>
+            </article>
+          </li>
+          <li>
+            <article class="card">
+              <p class="card-kicker">04 / operations</p>
+              <h3><a href="work/rmm-rollout.html">Company-wide RMM rollout</a></h3>
+              <p class="card-summary">Pitched to ownership, deployed across the organization, then extended with EDR integration, IT ticketing, and automated server patching.</p>
+              <ul class="tags" aria-label="Stack">
+                <li>RMM</li><li>Active Directory</li><li>Group Policy</li><li>EDR API</li><li>PowerShell</li>
+              </ul>
+              <p class="card-more" aria-hidden="true">Read case study &rarr;</p>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Open source =====================================================
+         Static on purpose: no GitHub API calls at runtime. -->
+    <section class="section" id="src" aria-labelledby="src-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="prompt" aria-hidden="true"><span class="prompt-path">~/src</span> <span class="prompt-sym">$</span> gh repo list</p>
+          <h2 id="src-title">Tools and experiments</h2>
+          <p class="section-lede">Small open-source utilities. Source is on GitHub.</p>
+        </div>
+
+        <ul class="repo-grid">
+          <li>
+            <article class="card repo">
+              <h3><a href="https://github.com/a-ghost-named-x/qps7">qps7</a></h3>
+              <p class="card-summary repo-desc">A port scanner that checks a host for a given set of ports and reports which ones are open.</p>
+              <p class="repo-lang">Python</p>
+            </article>
+          </li>
+          <li>
+            <article class="card repo">
+              <h3><a href="https://github.com/a-ghost-named-x/xbreaker">xbreaker</a></h3>
+              <p class="card-summary repo-desc">Decrypts a hex-encoded string with XOR, using a key supplied as a passphrase.</p>
+              <p class="repo-lang">Python</p>
+            </article>
+          </li>
+          <li>
+            <article class="card repo">
+              <h3><a href="https://github.com/a-ghost-named-x/ascii-art">ascii-art</a></h3>
+              <p class="card-summary repo-desc">Turns images into ASCII art, using PIL and NumPy for the image processing and character mapping.</p>
+              <p class="repo-lang">Python</p>
+            </article>
+          </li>
+        </ul>
+        <p class="section-foot"><a href="https://github.com/a-ghost-named-x?tab=repositories">All repositories on GitHub</a></p>
+      </div>
+    </section>
+
+    <!-- Tech stack ====================================================== -->
+    <section class="section" id="stack" aria-labelledby="stack-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="prompt" aria-hidden="true"><span class="prompt-path">~/stack</span> <span class="prompt-sym">$</span> tree -d</p>
+          <h2 id="stack-title">Tech stack</h2>
+          <p class="section-lede">The tools behind the work above, grouped by domain.</p>
+        </div>
+
+        <div class="stack-grid">
+          <div class="stack-group">
+            <h3>Windows Infrastructure</h3>
+            <ul class="tags">
+              <li>Windows Server</li><li>Active Directory</li><li>Group Policy</li><li>DNS</li><li>DHCP</li><li>AD CS / PKI</li><li>NPS / RADIUS</li>
+            </ul>
+          </div>
+          <div class="stack-group">
+            <h3>Virtualization and Backup</h3>
+            <ul class="tags">
+              <li>Hyper-V</li><li>Veeam</li><li>Dell PowerEdge</li>
+            </ul>
+          </div>
+          <div class="stack-group">
+            <h3>Cloud</h3>
+            <ul class="tags">
+              <li>Microsoft 365</li><li>Exchange Online</li><li>Entra ID</li><li>SharePoint</li><li>Teams</li><li>Power Automate</li><li>Power BI</li>
+            </ul>
+          </div>
+          <div class="stack-group">
+            <h3>Security</h3>
+            <ul class="tags">
+              <li>CrowdStrike Falcon</li><li>Proofpoint</li><li>SPF / DKIM / DMARC</li><li>802.1X</li><li>Phishing simulation</li><li>Incident response</li>
+            </ul>
+          </div>
+          <div class="stack-group">
+            <h3>Networking</h3>
+            <ul class="tags">
+              <li>UniFi</li><li>VLAN segmentation</li><li>Routing</li><li>Firewall rules</li>
+            </ul>
+          </div>
+          <div class="stack-group">
+            <h3>Linux and DevOps</h3>
+            <ul class="tags">
+              <li>Ubuntu Server</li><li>Kubernetes (k3s)</li><li>Docker</li><li>Traefik</li><li>Nginx</li><li>keepalived</li><li>GitHub Actions</li><li>Git</li>
+            </ul>
+          </div>
+          <div class="stack-group">
+            <h3>Scripting and Data</h3>
+            <ul class="tags">
+              <li>PowerShell</li><li>Python</li><li>Bash</li><li>SQL / T-SQL</li><li>SQL Server</li><li>PostgreSQL</li>
+            </ul>
+          </div>
+          <div class="stack-group">
+            <h3>Industrial / OT</h3>
+            <ul class="tags">
+              <li>Ignition SCADA</li><li>Allen-Bradley PLCs</li><li>MQTT</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications ================================================== -->
+    <section class="section" id="certs" aria-labelledby="certs-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="prompt" aria-hidden="true"><span class="prompt-path">~/certs</span> <span class="prompt-sym">$</span> ls</p>
+          <h2 id="certs-title">Certifications</h2>
+        </div>
+        <ul class="cert-list">
+          <li>CompTIA Security+</li>
+          <li>CompTIA Network+</li>
+          <li>CompTIA A+</li>
+          <li>CompTIA Secure Infrastructure Specialist (CSIS)</li>
+          <li>CompTIA IT Operations Specialist (CIOS)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- How this site works ============================================= -->
+    <section class="section" id="site" aria-labelledby="site-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="prompt" aria-hidden="true"><span class="prompt-path">~/meta</span> <span class="prompt-sym">$</span> cat how-this-site-works.md</p>
+          <h2 id="site-title">How this site works</h2>
+        </div>
+
+        <div class="meta-grid">
+          <div class="meta-text flow">
+            <p>Hand-written HTML and CSS, plus a few kilobytes of vanilla JavaScript for the terminal. No framework, no build step, no cookies, no trackers.</p>
+            <p>GitHub Pages serves it straight from the main branch, and the custom domain resolves through Cloudflare DNS. A strict Content Security Policy means the only files a browser will load are this site's own.</p>
+            <p>Every push and pull request runs CI: the W3C Nu validator checks the HTML and lychee checks the links, internal and external. CI checks the site. It never deploys it.</p>
+            <p><a href="https://github.com/a-ghost-named-x/a-ghost-named-x.github.io">Read the source on GitHub</a></p>
+          </div>
+
+          <div>
+            <div class="pipeline-block">
+              <h3>On every push</h3>
+              <ol class="pipeline">
+                <li><span class="step"><span class="step-name">git push</span><span class="step-note">any branch or PR</span></span></li>
+                <li><span class="step"><span class="step-name">GitHub Actions</span><span class="step-note">read-only token</span></span></li>
+                <li><span class="step"><span class="step-name">W3C Nu</span><span class="step-note">HTML validation</span></span></li>
+                <li><span class="step"><span class="step-name">lychee</span><span class="step-note">link check</span></span></li>
+              </ol>
+            </div>
+            <div class="pipeline-block">
+              <h3>Serving</h3>
+              <ol class="pipeline">
+                <li><span class="step"><span class="step-name">main</span><span class="step-note">branch, repo root</span></span></li>
+                <li><span class="step"><span class="step-name">GitHub Pages</span><span class="step-note">static hosting</span></span></li>
+                <li><span class="step"><span class="step-name">Cloudflare DNS</span><span class="step-note">custom domain</span></span></li>
+                <li><span class="step"><span class="step-name">Browser</span><span class="step-note">HTTPS</span></span></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact ========================================================= -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="prompt" aria-hidden="true"><span class="prompt-path">~/contact</span> <span class="prompt-sym">$</span> cat contact.txt</p>
+          <h2 id="contact-title">Contact</h2>
+          <p class="section-lede">Reach me by email, or find me on GitHub and LinkedIn.</p>
+        </div>
+        <dl class="contact-list">
+          <div>
+            <dt>email</dt>
+            <dd><a href="mailto:manuel@powers-technology.systems">manuel@powers-technology.systems</a></dd>
+          </div>
+          <div>
+            <dt>github</dt>
+            <dd><a href="https://github.com/a-ghost-named-x">github.com/a-ghost-named-x</a></dd>
+          </div>
+          <div>
+            <dt>linkedin</dt>
+            <dd><a href="https://www.linkedin.com/in/manuelp-itconsulting/">linkedin.com/in/manuelp-itconsulting</a></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Powers Technology Group</p>
+      <ul class="footer-links">
+        <li><a href="mailto:manuel@powers-technology.systems">email</a></li>
+        <li><a href="https://github.com/a-ghost-named-x">github</a></li>
+        <li><a href="https://www.linkedin.com/in/manuelp-itconsulting/">linkedin</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

@@ -22,6 +22,7 @@ assets/css/site.css        the only stylesheet
 assets/js/terminal.js      in-page shell; reads every answer from the page's own HTML
 assets/js/notfound.js      echoes the requested path on the 404 page
 assets/fonts/              JetBrains Mono woff2 and its license
+assets/img/headshot.jpg    600x600 photo in the About section
 assets/img/og-card.png     1200x630 social preview (source: tools/og-card.html)
 favicon.svg                "MP" monogram
 robots.txt, sitemap.xml    crawler hints
@@ -66,7 +67,7 @@ GitHub Pages can't set response headers, and a few directives only work as heade
 
 ## Common edits
 
-**Add the headshot.** Save a square photo as `assets/headshot.jpg` (480x480 or larger, ideally under 80 KB), then uncomment the `<img>` marked `HEADSHOT SLOT` in `index.html`. The About section switches to two columns by itself.
+**Replace the headshot.** Overwrite `assets/img/headshot.jpg` with a square photo (600x600, ideally under 80 KB). The About section shows it beside the text on wide screens and above it on narrow ones.
 
 **Add a case study.**
 1. Copy a page in `work/` and update its `<title>`, description, canonical URL, and Open Graph tags.
